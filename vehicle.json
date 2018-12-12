@@ -1,0 +1,32 @@
+[
+   {
+      "name":"Mahindra XUV 1",
+      "color":"Black",
+      "model":2010
+   },
+   {
+      "name":"Mahindra XUV 2",
+      "color":"Red",
+      "model":2014
+   },
+   {
+      "name":"Mahindra XUV 3",
+      "color":"Black",
+      "model":2015
+   },
+   {
+      "name":"Mahindra XUV 4",
+      "color":"Brown",
+      "model":2018
+   },
+   {
+      "name":"Mahindra XUV 5",
+      "color":"Red",
+      "model":2017
+   },
+   {
+      "name":"Mahindra XUV 6",
+      "color":"Brown",
+      "model":2019
+   }
+]
