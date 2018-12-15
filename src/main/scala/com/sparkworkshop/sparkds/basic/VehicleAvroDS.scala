@@ -1,4 +1,4 @@
-package com.sparkworkshop.sparkds
+package com.sparkworkshop.sparkds.basic
 
 import java.io.File
 

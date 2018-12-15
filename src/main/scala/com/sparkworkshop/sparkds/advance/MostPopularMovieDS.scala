@@ -1,4 +1,4 @@
-package com.sparkworkshop.sparkds
+package com.sparkworkshop.sparkds.advance
 
 import java.nio.charset.CodingErrorAction
 
@@ -28,7 +28,7 @@ object MostPopularMovieDS {
       movieLines.foreach(movieLine => {
         val movieLineArray = movieLine.split(",")
         if (!movieLineArray.contains("movieId")) {
-          movieTitles += (movieLineArray(0).toInt -> movieLineArray(1))
+          movieTitles += movieLineArray(0).toInt -> movieLineArray(1)
         }
       })
 
@@ -40,8 +40,8 @@ object MostPopularMovieDS {
 
     val movieBCast = sparkSession.sparkContext.broadcast(loadMovieTitles())
 
-    import sparkSession.implicits._
     import org.apache.spark.sql.functions._
+    import sparkSession.implicits._
     val moviesDS = ratingsDF.groupBy("movieId")
       .agg(count("movieId").as("count"))
       .select("count", "movieId")

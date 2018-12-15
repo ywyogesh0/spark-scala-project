@@ -1,4 +1,4 @@
-package com.sparkworkshop.sparkds
+package com.sparkworkshop.sparkds.basic
 
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.sql.SparkSession
