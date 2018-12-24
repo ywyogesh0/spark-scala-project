@@ -32,7 +32,7 @@ object PopularTwitterHashTags {
       .filter(word => word.trim.startsWith("#")).map(hashtag => (hashtag, 1))
 
     // twitterHashTagsDStream.reduceByKeyAndWindow(_ + _, _ - _, Seconds(300), Seconds(1))
-    val resultDSteam = twitterHashTagsDStream.reduceByKeyAndWindow((x, y) => x + y, (x, y) => x - y, Seconds(3600), Seconds(10))
+    val resultDSteam = twitterHashTagsDStream.reduceByKeyAndWindow((x, y) => x + y, (x, y) => x - y, Seconds(300), Seconds(1))
     val sortedDStream = resultDSteam.transform(rdd => rdd.sortBy(_._2, ascending = false))
 
     sortedDStream.print()

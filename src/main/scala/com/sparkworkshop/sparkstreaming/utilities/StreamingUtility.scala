@@ -1,5 +1,7 @@
 package com.sparkworkshop.sparkstreaming.utilities
 
+import java.util.regex.Pattern
+
 import com.sparkworkshop.sparkstreaming.constants.StreamingConstants._
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.streaming.StreamingContext
@@ -12,6 +14,7 @@ object StreamingUtility {
     Logger.getLogger("org").setLevel(Level.ERROR)
   }
 
+  /** Set Twitter Credentials for Authorization. */
   def setTwitterCredentials(): Unit = {
     val twitterCredentialsPath = System.getProperty("user.dir") + "/" + TWITTER_CREDENTIALS_FILE_NAME
 
@@ -22,8 +25,25 @@ object StreamingUtility {
     }
   }
 
+  /** Start and Wait for Streaming Context completion. */
   def setStreamingConfiguration(_ssc: StreamingContext): Unit = {
     _ssc.start()
     _ssc.awaitTermination()
+  }
+
+  /** Retrieves a regex Pattern for parsing Apache access logs. */
+  def retrieveApacheLogPattern(): Pattern = {
+    val ddd = "\\d{1,3}"
+    val ip = s"($ddd\\.$ddd\\.$ddd\\.$ddd)?"
+    val client = "(\\S+)"
+    val user = "(\\S+)"
+    val dateTime = "(\\[.+?\\])"
+    val request = "\"(.*?)\""
+    val status = "(\\d{3})"
+    val bytes = "(\\S+)"
+    val referer = "\"(.*?)\""
+    val agent = "\"(.*?)\""
+    val regex = s"$ip $client $user $dateTime $request $status $bytes $referer $agent"
+    Pattern.compile(regex)
   }
 }

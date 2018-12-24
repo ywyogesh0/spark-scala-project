@@ -46,14 +46,11 @@ object AverageTwitterTweetsLength {
         print(", Total Tweets Characters Count: " + twitterTextTotalCharactersCount.get())
         print(", Average Tweets Length: " + averageTwitterTweetsLength)
 
-        println()
-
-        println("Max Tweet Length: " + twitterTextMaxLength.get())
-
         if (twitterTextMaxLength.get() > largestTweet.get()) {
           largestTweet.set(twitterTextMaxLength.get())
         }
 
+        println()
         println("Till Now - Largest Tweet Length: " + largestTweet.get())
       }
     })
