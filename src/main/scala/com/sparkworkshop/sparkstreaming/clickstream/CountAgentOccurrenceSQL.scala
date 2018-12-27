@@ -69,10 +69,10 @@ object CountAgentOccurrenceSQL {
       println(s"------------$time-------------")
 
       if (resultDF.count() > 0) {
+
         resultDF.show(truncate = false)
-        resultDF
-          .coalesce(1)
-          .write.format("json").save(CLICK_STREAM_LOGS_DIR_PATH + time.milliseconds.toString)
+        resultDF.coalesce(1).write.format("json")
+          .save(CLICK_STREAM_LOGS_DIR_PATH + time.milliseconds.toString)
       }
 
     })
