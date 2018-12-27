@@ -2,6 +2,7 @@ package com.sparkworkshop.sparkstreaming.clickstream
 
 import java.util.regex.Pattern
 
+import com.sparkworkshop.sparkstreaming.constants.StreamingConstants._
 import com.sparkworkshop.sparkstreaming.utilities.StreamingUtility._
 import org.apache.spark.SparkConf
 import org.apache.spark.sql.SparkSession
@@ -54,7 +55,7 @@ object CountAgentOccurrenceSQL {
     val sparkSession = SparkSessionSingleton.getInstance(sparkConf)
 
     import sparkSession.implicits._
-    recordDStream.foreachRDD((recordRDD, time) => {
+    recordDStream.foreachRDD(foreachFunc = (recordRDD, time) => {
 
       val recordDF = recordRDD
         .map(record => Record(record._1, record._2, record._3))
@@ -62,10 +63,17 @@ object CountAgentOccurrenceSQL {
 
       recordDF.createOrReplaceTempView("records")
 
-      val resultDF = sparkSession.sql("select agent, count(1) as totalAgentCount from records group by agent")
+      val resultDF = sparkSession
+        .sql("select agent, count(1) as totalAgentCount from records group by agent").cache()
 
       println(s"------------$time-------------")
-      resultDF.show(truncate = false)
+
+      if (resultDF.count() > 0) {
+        resultDF.show(truncate = false)
+        resultDF
+          .coalesce(1)
+          .write.format("json").save(CLICK_STREAM_LOGS_DIR_PATH + time.milliseconds.toString)
+      }
 
     })
 
