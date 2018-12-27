@@ -14,15 +14,10 @@ import scala.util.Try
 object CountAgentOccurrenceSQL {
 
   def main(args: Array[String]): Unit = {
-
-    val sparkConf = new SparkConf().setAppName("CountAgentOccurrenceSQL").setMaster("local[*]")
-    val ssc = createStreamingContext(sparkConf)
-
-    // close streaming context
-    closeStreamingContext(ssc)
+    countAgentOccurence(new SparkConf().setAppName("CountAgentOccurrenceSQL").setMaster("local[*]"))
   }
 
-  def createStreamingContext(sparkConf: SparkConf): StreamingContext = {
+  def countAgentOccurence(sparkConf: SparkConf): Unit = {
     val ssc = new StreamingContext(sparkConf, Seconds(1))
 
     // set log level
@@ -75,7 +70,11 @@ object CountAgentOccurrenceSQL {
       }
     })
 
-    ssc
+    // close streaming context
+    closeStreamingContext(ssc)
+
+    // stop spark session
+    stopSparkSession(sparkSession)
   }
 
   /** Record case class to infer schema for structured record */

@@ -4,6 +4,7 @@ import java.util.regex.Pattern
 
 import com.sparkworkshop.sparkstreaming.constants.StreamingConstants._
 import org.apache.log4j.{Level, Logger}
+import org.apache.spark.sql.SparkSession
 import org.apache.spark.streaming.StreamingContext
 
 import scala.io.Source
@@ -29,6 +30,11 @@ object StreamingUtility {
   def closeStreamingContext(_ssc: StreamingContext): Unit = {
     _ssc.start()
     _ssc.awaitTermination()
+  }
+
+  /** Stop Spark Session. */
+  def stopSparkSession(_ss: SparkSession): Unit = {
+    _ss.stop()
   }
 
   /** Retrieves a regex Pattern for parsing Apache access logs. */
