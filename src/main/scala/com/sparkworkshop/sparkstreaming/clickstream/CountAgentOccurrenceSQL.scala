@@ -52,9 +52,9 @@ object CountAgentOccurrenceSQL {
 
     })
 
-    val sparkSession = SparkSessionSingleton.getInstance(sparkConf)
-
+    val sparkSession = SparkSession.builder().config(sparkConf).getOrCreate()
     import sparkSession.implicits._
+
     recordDStream.foreachRDD(foreachFunc = (recordRDD, time) => {
 
       val recordDF = recordRDD
@@ -69,12 +69,10 @@ object CountAgentOccurrenceSQL {
       println(s"------------$time-------------")
 
       if (resultDF.count() > 0) {
-
         resultDF.show(truncate = false)
         resultDF.coalesce(1).write.format("json")
           .save(CLICK_STREAM_LOGS_DIR_PATH + time.milliseconds.toString)
       }
-
     })
 
     ssc
@@ -82,20 +80,5 @@ object CountAgentOccurrenceSQL {
 
   /** Record case class to infer schema for structured record */
   case class Record(url: String, status: Int, agent: String)
-
-  /** Lazy Spark Session Instantiation */
-  object SparkSessionSingleton {
-
-    // no need to serialize instance object
-    @transient private var instance: SparkSession = _
-
-    def getInstance(sparkConf: SparkConf): SparkSession = {
-      if (instance == null) {
-        instance = SparkSession.builder().config(sparkConf).getOrCreate()
-      }
-
-      instance
-    }
-  }
 
 }
