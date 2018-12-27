@@ -26,7 +26,7 @@ object StreamingUtility {
   }
 
   /** Start and Wait for Streaming Context completion. */
-  def setStreamingConfiguration(_ssc: StreamingContext): Unit = {
+  def closeStreamingContext(_ssc: StreamingContext): Unit = {
     _ssc.start()
     _ssc.awaitTermination()
   }

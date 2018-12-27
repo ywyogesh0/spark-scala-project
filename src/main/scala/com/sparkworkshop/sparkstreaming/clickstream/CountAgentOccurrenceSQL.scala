@@ -18,8 +18,8 @@ object CountAgentOccurrenceSQL {
     val sparkConf = new SparkConf().setAppName("CountAgentOccurrenceSQL").setMaster("local[*]")
     val ssc = createStreamingContext(sparkConf)
 
-    // set streaming conf
-    setStreamingConfiguration(ssc)
+    // close streaming context
+    closeStreamingContext(ssc)
   }
 
   def createStreamingContext(sparkConf: SparkConf): StreamingContext = {

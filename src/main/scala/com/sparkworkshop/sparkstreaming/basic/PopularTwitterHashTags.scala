@@ -19,8 +19,8 @@ object PopularTwitterHashTags {
     val sparkConf = new SparkConf().setMaster("local[*]").setAppName("PopularTwitterHashTags")
     val ssc = StreamingContext.getOrCreate(SSC_CHECKPOINT_DIR_PATH, () => createStreamingContext(sparkConf))
 
-    // set streaming conf
-    setStreamingConfiguration(ssc)
+    // close streaming context
+    closeStreamingContext(ssc)
   }
 
   def createStreamingContext(sparkConf: SparkConf): StreamingContext = {

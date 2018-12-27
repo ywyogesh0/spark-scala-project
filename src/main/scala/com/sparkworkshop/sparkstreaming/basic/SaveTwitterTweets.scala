@@ -41,7 +41,7 @@ object SaveTwitterTweets {
       }
     })
 
-    // set streaming conf
-    setStreamingConfiguration(ssc)
+    // close streaming context
+    closeStreamingContext(ssc)
   }
 }
