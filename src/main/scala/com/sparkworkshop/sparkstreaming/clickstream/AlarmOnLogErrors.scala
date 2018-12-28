@@ -1,5 +1,6 @@
 package com.sparkworkshop.sparkstreaming.clickstream
 
+import java.util.concurrent.atomic.AtomicLong
 import java.util.regex.Pattern
 
 import com.sparkworkshop.sparkstreaming.constants.StreamingConstants.SSC_CHECKPOINT_DIR_PATH
@@ -57,7 +58,9 @@ object AlarmOnLogErrors {
     // window-interval: 60 minutes and sliding-window-interval: 1 sec
     val resultDStream = statusDStream.countByValueAndWindow(Seconds(3600), Seconds(1))
 
-    var previousTime: Long = 0
+    // using thread-safe counter
+    val previousTime = new AtomicLong(0)
+
     resultDStream.foreachRDD((rdd, time) => {
 
       // counter
@@ -94,11 +97,11 @@ object AlarmOnLogErrors {
         if (errorRatio > 0.5) {
 
           val currentTime = time.milliseconds
-          val seconds = (currentTime - previousTime) / 1000
+          val seconds = (currentTime - previousTime.get()) / 1000
 
           if (seconds > 10) {
             println("Wake somebody up! Something is horribly wrong.")
-            previousTime = currentTime
+            previousTime.set(currentTime)
           }
         }
       }
