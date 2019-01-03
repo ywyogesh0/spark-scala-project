@@ -72,7 +72,7 @@ object ApacheLogsIPSessionizer {
     Some((ip, newState))
   }
 
-  /** Custom data type to track session data */
+  /** Custom state data type to track session data */
   case class SessionData(sessionLength: Long, urls: List[String])
 
 }
