@@ -10,7 +10,7 @@ object FriendsAverageByAge {
   def main(args: Array[String]): Unit = {
 
     // log level - error
-    Logger.getLogger("org").setLevel(Level.INFO)
+    Logger.getLogger("org").setLevel(Level.ERROR)
 
     // file path
     val path = System.getProperty("user.dir") + "/friends.csv"

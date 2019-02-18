@@ -8,7 +8,7 @@ object WordsCounterDS {
   def main(args: Array[String]): Unit = {
 
     // log level
-    Logger.getLogger("org").setLevel(Level.INFO)
+    Logger.getLogger("org").setLevel(Level.ERROR)
 
     // user dir
     val path = System.getProperty("user.dir") + "/book.txt"

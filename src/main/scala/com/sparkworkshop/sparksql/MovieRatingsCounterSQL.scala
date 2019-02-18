@@ -11,7 +11,7 @@ object MovieRatingsCounterSQL {
   def main(args: Array[String]): Unit = {
 
     // log level - error
-    Logger.getLogger("org").setLevel(Level.INFO)
+    Logger.getLogger("org").setLevel(Level.ERROR)
 
     // user dir
     val path = System.getProperty("user.dir") + "/ratings.csv"

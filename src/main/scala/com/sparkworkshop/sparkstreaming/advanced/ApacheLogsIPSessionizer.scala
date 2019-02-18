@@ -1,4 +1,4 @@
-package com.sparkworkshop.advanced
+package com.sparkworkshop.sparkstreaming.advanced
 
 import java.util.regex.Pattern
 

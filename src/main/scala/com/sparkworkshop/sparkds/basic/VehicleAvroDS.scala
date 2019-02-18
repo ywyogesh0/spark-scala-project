@@ -10,7 +10,7 @@ object VehicleAvroDS {
   def main(args: Array[String]): Unit = {
 
     // log level - error
-    Logger.getLogger("org").setLevel(Level.INFO)
+    Logger.getLogger("org").setLevel(Level.ERROR)
 
     // file path
     val path = System.getProperty("user.dir") + "/vehicle"
@@ -25,10 +25,10 @@ object VehicleAvroDS {
       Seq(
         ("Mahindra XUV 1", "Black", 2010),
         ("Mahindra XUV 2", "Black", 2014),
-        ("Mahindra XUV 3", "Black", 2015),
-        ("Mahindra XUV 4", "Black", 2018),
-        ("Mahindra XUV 5", "Black", 2017),
-        ("Mahindra XUV 6", "Black", 2019)
+        ("Mahindra XUV 3", "Black", 2010),
+        ("Mahindra XUV 4", "Black", 2014),
+        ("Mahindra XUV 5", "Black", 2010),
+        ("Mahindra XUV 6", "Black", 2015)
       )
     ).toDF("name", "color", "model")
       .as[Vehicle]

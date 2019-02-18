@@ -23,6 +23,7 @@ object MostPopularSuperheroDS {
       .getOrCreate()
 
     import sparkSession.implicits._
+    import org.apache.spark.sql.functions._
 
     /**
       * Return map of social names
@@ -80,23 +81,16 @@ object MostPopularSuperheroDS {
     // (connectionCount, superheroId)
     val connectionRDD = socialGraphRDD.map(createSuperheroConnectionInput)
 
-    val connectionDF = connectionRDD.toDF("superheroId", "connectionCount").cache()
-
-    connectionDF.printSchema()
-
-    import org.apache.spark.sql.functions._
-
-    val maxRowDF = connectionDF
+    val rowDF = connectionRDD.toDF("superheroId", "connectionCount")
       .groupBy("superheroId")
       .agg(sum("connectionCount").as("connectionCount"))
       .select("superheroId", "connectionCount")
-      .orderBy(desc("connectionCount"))
+      .cache()
 
-    val minRowDF = connectionDF
-      .groupBy("superheroId")
-      .agg(sum("connectionCount").as("connectionCount"))
-      .select("superheroId", "connectionCount")
-      .orderBy(asc("connectionCount"))
+    rowDF.printSchema()
+
+    val maxRowDF = rowDF.orderBy(desc("connectionCount"))
+    val minRowDF = rowDF.orderBy(asc("connectionCount"))
 
     val maxRow = getRow(maxRowDF, socialNamesVariable)
     val minRow = getRow(minRowDF, socialNamesVariable)

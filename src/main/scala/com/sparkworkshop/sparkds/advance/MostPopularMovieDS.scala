@@ -46,7 +46,7 @@ object MostPopularMovieDS {
       .agg(count("movieId").as("count"))
       .select("count", "movieId")
       .orderBy(desc("count"))
-      .toDF("count", "movieId").as[MoviesResult]
+      .as[MoviesResult]
 
     moviesDS.map(movie => (movie.count, movieBCast.value(movie.movieId.toInt)))
       .toDF("count", "title")

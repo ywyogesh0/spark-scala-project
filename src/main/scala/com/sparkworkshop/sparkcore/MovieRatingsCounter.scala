@@ -10,7 +10,7 @@ object MovieRatingsCounter {
   def main(args: Array[String]): Unit = {
 
     // log level - error
-    Logger.getLogger("org").setLevel(Level.INFO)
+    Logger.getLogger("org").setLevel(Level.ERROR)
 
     // file path
     val path = System.getProperty("user.dir") + "/ratings.csv"
@@ -27,13 +27,13 @@ object MovieRatingsCounter {
     val filterRDD = dataRDD.filter(line => !line.contains("rating"))
 
     // get only ratings
-    val ratingsRDD = filterRDD.map(line => line.split(",")(2))
+    val ratingsRDD = filterRDD.map(line => line.split(",")(2).toDouble)
 
-    // Map[String, Long] - count by ratings value {action} | lazy loading
+    // Map[String, Long] - count by value {action} | lazy execution
     val resultMap = ratingsRDD.countByValue()
 
     // sort the result
-    val sortedSequence = resultMap.toSeq.sortBy(seq => seq._1)
+    val sortedSequence = resultMap.toSeq.sortBy(seq => seq._1)(Ordering[Double].reverse)
 
     sortedSequence.foreach(println)
   }

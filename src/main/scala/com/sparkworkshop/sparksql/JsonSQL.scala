@@ -2,7 +2,6 @@ package com.sparkworkshop.sparksql
 
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.types.{DataTypes, StructField, StructType}
 
 // singleton object/instance in scala
 object JsonSQL {
@@ -11,7 +10,7 @@ object JsonSQL {
   def main(args: Array[String]): Unit = {
 
     // log level - error
-    Logger.getLogger("org").setLevel(Level.INFO)
+    Logger.getLogger("org").setLevel(Level.ERROR)
 
     // user dir
     val path = System.getProperty("user.dir") + "/vehicle.json"

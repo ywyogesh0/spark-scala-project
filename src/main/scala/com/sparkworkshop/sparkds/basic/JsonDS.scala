@@ -10,7 +10,7 @@ object JsonDS {
   def main(args: Array[String]): Unit = {
 
     // log level - error
-    Logger.getLogger("org").setLevel(Level.INFO)
+    Logger.getLogger("org").setLevel(Level.ERROR)
 
     // file path
     val path = System.getProperty("user.dir") + "/vehicle.json"
@@ -29,7 +29,7 @@ object JsonDS {
     dataDS.printSchema()
 
     dataDS
-      .filter(json => json.color.equalsIgnoreCase("brown"))
+      .filter(vehicle => vehicle.color.equalsIgnoreCase("brown"))
       .show()
 
     sparkSession.close()
